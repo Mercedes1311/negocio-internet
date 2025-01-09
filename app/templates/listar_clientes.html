@@ -29,7 +29,8 @@
         <tr>
             <th>Nombre</th>
             <th>Servicio</th>
-            <!-- <th>Deuda</th> -->
+            <th>Deuda</th>
+            <th>Próximo pago</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -37,8 +38,9 @@
         {% for cliente in clientes %}
         <tr>
             <td>{{ cliente.nombre }} {{ cliente.apellido_paterno }} {{ cliente.apellido_materno }}</td>
-            <!-- <td>{{ cliente.servicio }}</td> -->
+            <td>{{ cliente.servicio }}</td>
             <td>{{ cliente.deuda_actual }}</td>
+            <td>{{ cliente.siguiente_pago }}</td>
             <td>
                 <a href="{% url 'ver_informe' cliente.id %}" class="btn btn-info btn-sm">Ver Informe</a>
 
