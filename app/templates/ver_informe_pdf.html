@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de Cliente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>Informe de Cliente</h2>
+    <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
+    <p><strong>Apellido Paterno:</strong> {{ cliente.apellido_paterno }}</p>
+    <p><strong>Apellido Materno:</strong> {{ cliente.apellido_materno }}</p>
+    <p><strong>DNI:</strong> {{ cliente.dni }}</p>
+    <p><strong>Servicio:</strong> {{ cliente.servicio }}</p>
+    <p><strong>Fecha de inicio:</strong> {{ cliente.fecha_inicio }}</p>
+    <p><strong>Deuda Actual:</strong> {{ deuda_actual }}</p>
+    <p><strong>Fecha del Siguiente Pago:</strong> {{ siguiente_pago }}</p>
+
+    <h3>Historial de Pagos</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha de Pago</th>
+                <th>Monto Pagado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pago in pagos %}
+            <tr>
+                <td>{{ pago.fecha_pago }}</td>
+                <td>{{ pago.monto_pagado }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No hay pagos registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

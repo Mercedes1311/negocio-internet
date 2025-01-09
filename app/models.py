@@ -20,19 +20,21 @@ class Cliente(models.Model):
     direccion = models.TextField()
 
     def deuda_actual(self):
-        """Calcula la deuda acumulada en base a los meses no pagados."""
+        
         meses_transcurridos = (date.today().year - self.fecha_inicio.year) * 12 + (date.today().month - self.fecha_inicio.month)
         pagos_realizados = self.pago_set.aggregate(models.Sum('monto_pagado'))['monto_pagado__sum'] or 0
-        deuda_total = meses_transcurridos * float(self.servicio) - pagos_realizados
-        return max(deuda_total, 0)
+        deuda_total = meses_transcurridos * (self.servicio) - pagos_realizados
+        return  max(deuda_total, 0)
 
     def siguiente_pago(self):
-        """Calcula la fecha estimada del próximo pago."""
-        if self.pago_set.exists():
-            ultimo_pago = self.pago_set.latest('fecha_pago')
-            return ultimo_pago.fecha_pago + timedelta(days=30)
-        return self.fecha_inicio + timedelta(days=30)
+        
+        meses_transcurridos = (date.today().year - self.fecha_inicio.year) * 12 + (date.today().month - self.fecha_inicio.month)
+        return self.fecha_inicio + timedelta(days=31 * (meses_transcurridos + 1))
 
+    def tiene_pago_hoy(self):
+        
+        return self.siguiente_pago() == date.today()
+    
     def __str__(self):
         return f"{self.nombre} {self.apellido_paterno} ({self.dni})"
 

@@ -7,7 +7,9 @@
 <p><strong>Apellido Materno:</strong>{{ cliente.apellido_materno }}</p>
 <p><strong>DNI:</strong> {{ cliente.dni }}</p>
 <p><strong>Servicio:</strong> {{ cliente.servicio }}</p>
-<p><strong>Deuda Actual:</strong> {{ cliente.deuda_actual }}</p>
+<p><strong>Fecha de inicio:</strong> {{ cliente.fecha_inicio }}</p>
+<p><strong>Deuda Actual:</strong> {{ deuda_actual }}</p>
+<p><strong>Fecha del Siguiente Pago:</strong> {{ siguiente_pago }}</p>
 
 <h3>Historial de Pagos</h3>
 <table class="table table-bordered">
@@ -30,5 +32,7 @@
         {% endfor %}
     </tbody>
 </table>
+<a href="{% url 'descargar_informe_pdf' cliente.id %}" class="btn btn-primary">Descargar Informe en PDF</a>
 <a href="{% url 'listar_clientes' %}" class="btn btn-secondary">Volver</a>
+
 {% endblock %}
