@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Pagar Deuda</h2>
+<p>Cliente: {{ cliente.nombre }} {{ cliente.apellido_paterno }}</p>
+<p>Deuda Actual: {{ cliente.deuda_actual }}</p>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="monto_pagado" class="form-label">Monto a Pagar</label>
+        <input type="number" name="monto_pagado" step="0.01" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Pagar</button>
+</form>
+{% endblock %}
