@@ -1,19 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Informe de Cliente</h2>
-<p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
-<p><strong>Apellido Paterno:</strong>{{ cliente.apellido_paterno }}</p>
-<p><strong>Apellido Materno:</strong>{{ cliente.apellido_materno }}</p>
-<p><strong>DNI:</strong> {{ cliente.dni }}</p>
-<p><strong>Servicio:</strong> {{ cliente.servicio }}</p>
-<p><strong>Fecha de inicio:</strong> {{ cliente.fecha_inicio }}</p>
-<p><strong>Deuda Actual:</strong> {{ deuda_actual }}</p>
-<p><strong>Fecha del Siguiente Pago:</strong> {{ siguiente_pago }}</p>
+<h2 class="mb-4">Informe de Cliente</h2>
 
-<h3>Historial de Pagos</h3>
-<table class="table table-bordered">
-    <thead>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h4 class="text-primary">Datos Personales</h4>
+        <ul class="list-unstyled">
+            <li><strong>Nombre:</strong> {{ cliente.nombre }} {{ cliente.apellido_paterno }} {{ cliente.apellido_materno }}</li>
+            <li><strong>DNI:</strong> {{ cliente.dni }}</li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h4 class="text-primary">Datos del Servicio</h4>
+        <ul class="list-unstyled">
+            <li><strong>Servicio:</strong> {{ cliente.servicio }}</li>
+            <li><strong>Fecha de Inicio:</strong> {{ cliente.fecha_inicio }}</li>
+            <li><strong>Deuda Actual:</strong> {{ deuda_actual }}</li>
+            <li><strong>Fecha del Siguiente Pago:</strong> {{ siguiente_pago }}</li>
+        </ul>
+    </div>
+</div>
+
+<h3 class="mt-4 mb-3">Historial de Pagos</h3>
+<table class="table table-bordered table-striped">
+    <thead class="table-primary">
         <tr>
             <th>Fecha de Pago</th>
             <th>Monto Pagado</th>
@@ -27,12 +38,15 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="2">No hay pagos registrados.</td>
+            <td colspan="2" class="text-center">No hay pagos registrados.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<a href="{% url 'descargar_informe_pdf' cliente.id %}" class="btn btn-primary">Descargar Informe en PDF</a>
-<a href="{% url 'listar_clientes' %}" class="btn btn-secondary">Volver</a>
+
+<div class="d-flex justify-content-between mt-4">
+    <a href="{% url 'descargar_informe_pdf' cliente.id %}" class="btn btn-primary">Descargar Informe en PDF</a>
+    <a href="{% url 'listar_clientes' %}" class="btn btn-secondary">Volver</a>
+</div>
 
 {% endblock %}

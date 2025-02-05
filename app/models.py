@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date, timedelta
+from calendar import monthrange
 
 class Cliente(models.Model):
     SERVICIO_CHOICES = [
@@ -27,9 +28,19 @@ class Cliente(models.Model):
         return  max(deuda_total, 0)
 
     def siguiente_pago(self):
+        # Obtener el mes y año del siguiente pago, ajustando al mismo día del mes
+        next_month = (self.fecha_inicio.month + 1) if self.fecha_inicio.month < 12 else 1
+        next_year = self.fecha_inicio.year if next_month > 1 else self.fecha_inicio.year + 1
         
-        meses_transcurridos = (date.today().year - self.fecha_inicio.year) * 12 + (date.today().month - self.fecha_inicio.month)
-        return self.fecha_inicio + timedelta(days=31 * (meses_transcurridos + 1))
+        # Verificar si el siguiente mes tiene el mismo día (en caso de que el mes tenga menos días)
+        try:
+            siguiente_pago = date(next_year, next_month, self.fecha_inicio.day)
+        except ValueError:
+            # Si no existe ese día en el siguiente mes (por ejemplo, 31 de febrero), ajustamos al último día del mes
+            _, last_day_of_next_month = monthrange(next_year, next_month)
+            siguiente_pago = date(next_year, next_month, last_day_of_next_month)
+        
+        return siguiente_pago
 
     def tiene_pago_hoy(self):
         

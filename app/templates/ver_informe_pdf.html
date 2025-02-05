@@ -2,57 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informe de Cliente</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Georgia', serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h2, h3, h4 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            padding: 5px 0;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
+            text-align: left;
         }
         th, td {
             padding: 10px;
-            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    <h2>Informe de Cliente</h2>
-    <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
-    <p><strong>Apellido Paterno:</strong> {{ cliente.apellido_paterno }}</p>
-    <p><strong>Apellido Materno:</strong> {{ cliente.apellido_materno }}</p>
-    <p><strong>DNI:</strong> {{ cliente.dni }}</p>
-    <p><strong>Servicio:</strong> {{ cliente.servicio }}</p>
-    <p><strong>Fecha de inicio:</strong> {{ cliente.fecha_inicio }}</p>
-    <p><strong>Deuda Actual:</strong> {{ deuda_actual }}</p>
-    <p><strong>Fecha del Siguiente Pago:</strong> {{ siguiente_pago }}</p>
+    <div class="container">
+        <h1>Informe de Cliente</h1>
 
-    <h3>Historial de Pagos</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Fecha de Pago</th>
-                <th>Monto Pagado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for pago in pagos %}
-            <tr>
-                <td>{{ pago.fecha_pago }}</td>
-                <td>{{ pago.monto_pagado }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="2">No hay pagos registrados.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <div class="row">
+            <div>
+                <h4>Datos Personales</h4>
+                <ul>
+                    <li><strong>Nombre:</strong> {{ cliente.nombre }} {{ cliente.apellido_paterno }} {{ cliente.apellido_materno }}</li>
+                    <li><strong>DNI:</strong> {{ cliente.dni }}</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Datos del Servicio</h4>
+                <ul>
+                    <li><strong>Servicio:</strong> {{ cliente.servicio }}</li>
+                    <li><strong>Fecha de Inicio:</strong> {{ cliente.fecha_inicio }}</li>
+                    <li><strong>Deuda Actual:</strong> {{ deuda_actual }}</li>
+                    <li><strong>Fecha del Siguiente Pago:</strong> {{ siguiente_pago }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Historial de Pagos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha de Pago</th>
+                    <th>Monto Pagado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pago in pagos %}
+                <tr>
+                    <td>{{ pago.fecha_pago }}</td>
+                    <td>{{ pago.monto_pagado }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="text-center">No hay pagos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
